@@ -17,7 +17,7 @@
     img.title = 'Нет файла: ' + img.getAttribute('src');
     img.src = BLANK;
     img.classList.add('img-missing');
-    var box = img.closest('.feature__img, .week__img, .channel__shot, .who__art, .iv__cover, .case__proof');
+    var box = img.closest('.feature__img, .week__img, .channel, .who__art, .iv__cover, .case__proof');
     if (box) box.classList.add('img-missing');
   }
   document.querySelectorAll('img').forEach(function (img) {
@@ -55,25 +55,4 @@
       openItem(d);
     });
   });
-
-  var track = document.querySelector('.channels__track');
-  if (track) {
-    var down = false, startX = 0, startLeft = 0, moved = false;
-    track.addEventListener('pointerdown', function (e) {
-      if (e.pointerType !== 'mouse') return;
-      down = true; moved = false; startX = e.clientX; startLeft = track.scrollLeft;
-    });
-    window.addEventListener('pointermove', function (e) {
-      if (!down) return;
-      var z = parseFloat(getComputedStyle(root).getPropertyValue('--zoom')) || 1;
-      var dx = (e.clientX - startX) / z;
-      if (Math.abs(dx) > 4) { moved = true; track.classList.add('is-dragging'); }
-      track.scrollLeft = startLeft - dx;
-    });
-    window.addEventListener('pointerup', function () {
-      if (!down) return;
-      down = false; track.classList.remove('is-dragging');
-    });
-    track.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
-  }
 })();
